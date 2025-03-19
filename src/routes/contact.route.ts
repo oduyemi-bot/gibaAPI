@@ -1,14 +1,18 @@
 import express from "express";
-import { getAllContacts, getContactById } from "../controllers/contact.controller";
-import { validateRequestBody } from "../middlewares/validation.middleware";
+import {
+  createContact,
+  getContacts,
+  getContactById,
+  updateContactStatus,
+  deleteContact,
+} from "../controllers/contact.controller";
 
 const router = express.Router();
 
-router.get("/", getAllContacts);
+router.post("/", createContact);
+router.get("/", getContacts);
 router.get("/:id", getContactById);
-// router.post("/contact", validateRequestBody(["name", "email", "phone", "subject", "message"]), newContact);
-
-
-
+router.put("/:id/status", updateContactStatus);
+router.delete("/:id", deleteContact);
 
 export default router;
