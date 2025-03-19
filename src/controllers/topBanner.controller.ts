@@ -5,7 +5,6 @@ import BannerItem from "../models/topBanner.model";
 export const createBanner = async (req: Request, res: Response) => {
   try {
     const { name } = req.body;
-
     const newTopBanner = new BannerItem({
       name
     });
