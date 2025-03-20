@@ -4,10 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const topBanner_controller_1 = require("../controllers/topBanner.controller");
+const mailingList_controller_1 = require("../controllers/mailingList.controller");
 const router = express_1.default.Router();
-router.get("/", topBanner_controller_1.getItems);
-router.get("/:id", topBanner_controller_1.getItemById);
-router.put("/:id", topBanner_controller_1.updateItem);
-router.delete("/:id", topBanner_controller_1.deleteItem);
+router.post("/", mailingList_controller_1.createMailingList);
+router.get("/", mailingList_controller_1.getMailingList);
+router.get("/:id", mailingList_controller_1.getEmailById);
 exports.default = router;

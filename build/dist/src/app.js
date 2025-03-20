@@ -16,6 +16,7 @@ const contact_route_1 = __importDefault(require("./routes/contact.route"));
 const banner_route_1 = __importDefault(require("./routes/banner.route"));
 const patient_route_1 = __importDefault(require("./routes/patient.route"));
 const membership_route_1 = __importDefault(require("./routes/membership.route"));
+const mailingList_route_1 = __importDefault(require("./routes/mailingList.route"));
 const index_1 = require("./config/index");
 const appError_1 = __importDefault(require("./utils/appError"));
 dotenv_1.default.config();
@@ -26,6 +27,7 @@ const corsOptions = {
         "http://localhost:3000",
         "http://localhost:3001",
         "https://gibarestorative.com",
+        "https://www.gibarestorative.com",
     ],
     credentials: true,
 };
@@ -53,6 +55,7 @@ app.use('/api/v1/contact', contact_route_1.default);
 app.use('/api/v1/banners', banner_route_1.default);
 app.use('/api/v1/patients', patient_route_1.default);
 app.use('/api/v1/members', membership_route_1.default);
+app.use("/api/v1/mailinglist", mailingList_route_1.default);
 // Error handling for undefined routes
 app.all("*", (req, res, next) => {
     next(new appError_1.default(`The route ${req.originalUrl} with the ${req.method} method does not exist on this server! 💨`, 404));

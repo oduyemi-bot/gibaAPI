@@ -13,6 +13,6 @@ router.post("/register", admin_controller_1.registerAdmin);
 router.post("/login", admin_controller_1.loginAdmin);
 router.put("/:adminID", admin_controller_1.updateAdmin);
 router.delete("/:adminID", auth_middleware_1.authenticateAdmin, admin_controller_1.deleteAdmin);
-router.put("/:adminID/reset-password", admin_controller_1.resetPassword);
+router.put("/reset-password/:adminID", admin_controller_1.resetPassword);
 router.post("/logout", auth_middleware_1.authenticateAdmin, admin_controller_1.logoutAdmin);
 exports.default = router;

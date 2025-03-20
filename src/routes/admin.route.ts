@@ -19,7 +19,7 @@ router.post("/register", registerAdmin);
 router.post("/login", loginAdmin);
 router.put("/:adminID", updateAdmin);
 router.delete("/:adminID", authenticateAdmin, deleteAdmin);
-router.put("/:adminID/reset-password", resetPassword);
+router.put("/reset-password/:adminID", resetPassword);
 router.post("/logout", authenticateAdmin, logoutAdmin);
 
 export default router;

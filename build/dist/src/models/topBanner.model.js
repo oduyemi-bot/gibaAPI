@@ -35,12 +35,27 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const bannerItemSchema = new mongoose_1.Schema({
-    name: {
+    phone: {
         type: String,
-        required: [true, "Item is required"],
+        required: [true, "Phone number is required"],
         unique: true,
         trim: true,
-        minlength: [3, "Item must be at least 3 characters long"],
+        minlength: [10, "Phone number must be at least 10 digits long"],
+        match: /^\+?[1-9]\d{1,14}$/,
+    },
+    email: {
+        type: String,
+        required: [true, "Email is required"],
+        validate: {
+            validator: (v) => /^\S+@\S+\.\S+$/.test(v),
+            message: "Please provide a valid email address",
+        },
+    },
+    message: {
+        type: String,
+        required: [true, "Message is required"],
+        minlength: [6, "Message must be at least 6 characters long"],
+        trim: true,
     },
 });
 const BannerItem = mongoose_1.default.model("BannerItem", bannerItemSchema);

@@ -8,6 +8,7 @@ export interface IAdmin extends Document {
   lname: string;
   email: string;
   phone: string;
+  jobrole: string;
   password: string;
   createdAt: Date;
   updatedAt: Date;
@@ -39,6 +40,10 @@ const adminSchema = new mongoose.Schema(
         validator: (phone: string) => /^\+?\d{1,3}[- ]?\d{3}[- ]?\d{3}[- ]?\d{4}$/.test(phone),
         message: "Invalid phone number format",
       },
+    },
+    jobrole: {
+      type: String,
+      required: [true, "Job role is required"],
     },
     password: {
       type: String,

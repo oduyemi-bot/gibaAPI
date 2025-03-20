@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface IPatient extends Document {
   fullname: string;
+  _id: mongoose.Types.ObjectId;
   email: string;
   phone: string;
   age: number;

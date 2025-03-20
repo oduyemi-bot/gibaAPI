@@ -11,6 +11,7 @@ import contactRoutes from "./routes/contact.route";
 import bannerRoutes from "./routes/banner.route";
 import patientRoutes from "./routes/patient.route";
 import membershipRoutes from "./routes/membership.route";
+import mailingRoutes from "./routes/mailingList.route";
 import { db, store } from "./config/index"; 
 import AppError from "./utils/appError";
 
@@ -25,6 +26,7 @@ const corsOptions = {
     "http://localhost:3000", 
     "http://localhost:3001", 
     "https://gibarestorative.com", 
+    "https://www.gibarestorative.com", 
   ],
   credentials: true,
 };
@@ -60,6 +62,7 @@ app.use('/api/v1/contact', contactRoutes);
 app.use('/api/v1/banners', bannerRoutes);
 app.use('/api/v1/patients', patientRoutes);
 app.use('/api/v1/members', membershipRoutes);
+app.use("/api/v1/mailinglist", mailingRoutes);
 
 // Error handling for undefined routes
 app.all("*", (req, res, next) => {

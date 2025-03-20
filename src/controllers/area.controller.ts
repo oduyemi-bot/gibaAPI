@@ -38,6 +38,24 @@ export const getAreaById = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
+export const updateArea = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const updatedArea = await ServiceArea.findByIdAndUpdate(req.params._id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedArea) {
+      res.status(404).json({ message: "Area not found" });
+      return;
+    }
+
+    res.status(200).json(updatedArea);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating area", error });
+  }
+};
+
 export const deleteArea = async (req: Request, res: Response): Promise<void> => {
   try {
     const deletedArea = await ServiceArea.findByIdAndDelete(req.params.id);

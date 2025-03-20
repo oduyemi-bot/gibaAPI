@@ -13,6 +13,7 @@ interface AdminSession {
     lname: string;
     email: string;
     phone: string;
+    jobrole: string;
     createdAt: Date;
     updatedAt?: Date;
 }
@@ -55,9 +56,9 @@ export const getAdminById = async (req: Request, res: Response): Promise<void> =
 
 export const registerAdmin = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { fname, lname, email, phone, password, confirmPassword } = req.body;
+        const { fname, lname, email, phone, jobrole, password, confirmPassword } = req.body;
 
-        if (![fname, lname, email, phone, password, confirmPassword].every((field) => field)) {
+        if (![fname, lname, email, phone, jobrole, password, confirmPassword].every((field) => field)) {
             res.status(400).json({ message: "All fields are required" });
             return;
         }
@@ -74,7 +75,7 @@ export const registerAdmin = async (req: Request, res: Response): Promise<void> 
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newAdmin: IAdmin = new Admin({ fname, lname, email, phone, password: hashedPassword }) as IAdmin;
+        const newAdmin: IAdmin = new Admin({ fname, lname, email, phone, jobrole, password: hashedPassword }) as IAdmin;
         await newAdmin.save();
 
         const token = jwt.sign(
@@ -89,6 +90,7 @@ export const registerAdmin = async (req: Request, res: Response): Promise<void> 
             lname: newAdmin.lname,
             email: newAdmin.email,
             phone: newAdmin.phone,
+            jobrole: newAdmin.jobrole,
             createdAt: newAdmin.createdAt,
             updatedAt: newAdmin.updatedAt,
         };
@@ -99,10 +101,12 @@ export const registerAdmin = async (req: Request, res: Response): Promise<void> 
             message: "Admin registered successfully.",
             token,
             admin: {
+                AdminID: newAdmin._id,
                 fname: newAdmin.fname,
                 lname: newAdmin.lname,
                 email: newAdmin.email,
                 phone: newAdmin.phone,
+                jobrole: newAdmin.jobrole,
             },
             nextStep: "/next-login-page",
         });
@@ -144,6 +148,7 @@ export const loginAdmin = async (req: Request, res: Response, next: NextFunction
             lname: admin.lname,
             email: admin.email,
             phone: admin.phone,
+            jobrole: admin.jobrole,
             createdAt: admin.createdAt,
             updatedAt: admin.updatedAt,
         };
@@ -157,6 +162,9 @@ export const loginAdmin = async (req: Request, res: Response, next: NextFunction
             lname: admin.lname,
             email: admin.email,
             phone: admin.phone,
+            jobrole: admin.jobrole,
+            createdAt: admin.createdAt,
+            updatedAt: admin.updatedAt,
             nextStep: "/next-dashboard",
             token,
         });

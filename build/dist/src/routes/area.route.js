@@ -9,5 +9,6 @@ const router = express_1.default.Router();
 router.post("/", area_controller_1.createArea);
 router.get("/", area_controller_1.getAreas);
 router.get("/:id", area_controller_1.getAreaById);
+router.put("/:id", area_controller_1.updateArea);
 router.delete("/:id", area_controller_1.deleteArea);
 exports.default = router;

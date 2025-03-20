@@ -48,8 +48,8 @@ const getAdminById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.getAdminById = getAdminById;
 const registerAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { fname, lname, email, phone, password, confirmPassword } = req.body;
-        if (![fname, lname, email, phone, password, confirmPassword].every((field) => field)) {
+        const { fname, lname, email, phone, jobrole, password, confirmPassword } = req.body;
+        if (![fname, lname, email, phone, jobrole, password, confirmPassword].every((field) => field)) {
             res.status(400).json({ message: "All fields are required" });
             return;
         }
@@ -63,7 +63,7 @@ const registerAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             return;
         }
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
-        const newAdmin = new admin_model_1.default({ fname, lname, email, phone, password: hashedPassword });
+        const newAdmin = new admin_model_1.default({ fname, lname, email, phone, jobrole, password: hashedPassword });
         yield newAdmin.save();
         const token = jsonwebtoken_1.default.sign({ adminID: newAdmin._id, email: newAdmin.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
         const adminSession = {
@@ -72,6 +72,7 @@ const registerAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             lname: newAdmin.lname,
             email: newAdmin.email,
             phone: newAdmin.phone,
+            jobrole: newAdmin.jobrole,
             createdAt: newAdmin.createdAt,
             updatedAt: newAdmin.updatedAt,
         };
@@ -80,10 +81,12 @@ const registerAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             message: "Admin registered successfully.",
             token,
             admin: {
+                AdminID: newAdmin._id,
                 fname: newAdmin.fname,
                 lname: newAdmin.lname,
                 email: newAdmin.email,
                 phone: newAdmin.phone,
+                jobrole: newAdmin.jobrole,
             },
             nextStep: "/next-login-page",
         });
@@ -119,6 +122,7 @@ const loginAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             lname: admin.lname,
             email: admin.email,
             phone: admin.phone,
+            jobrole: admin.jobrole,
             createdAt: admin.createdAt,
             updatedAt: admin.updatedAt,
         };
@@ -130,6 +134,9 @@ const loginAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             lname: admin.lname,
             email: admin.email,
             phone: admin.phone,
+            jobrole: admin.jobrole,
+            createdAt: admin.createdAt,
+            updatedAt: admin.updatedAt,
             nextStep: "/next-dashboard",
             token,
         });

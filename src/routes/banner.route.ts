@@ -1,16 +1,16 @@
 import express from "express";
 import {
-  createBanner,
   getItems,
   getItemById,
+  updateItem,
   deleteItem,
 } from "../controllers/topBanner.controller";
 
 const router = express.Router();
 
-router.post("/", createBanner);
 router.get("/", getItems);
 router.get("/:id", getItemById);
+router.put("/:id", updateItem);
 router.delete("/:id", deleteItem);
 
 export default router;

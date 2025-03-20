@@ -30,6 +30,10 @@ const adminSchema = new mongoose_1.default.Schema({
             message: "Invalid phone number format",
         },
     },
+    jobrole: {
+        type: String,
+        required: [true, "Job role is required"],
+    },
     password: {
         type: String,
         required: [true, "Password is required"],
